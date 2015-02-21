@@ -43,6 +43,19 @@ if [ ! -n "${BULLETTRAIN_STATUS_FG+1}" ]; then
   BULLETTRAIN_STATUS_FG=white
 fi
 
+# JOBS
+if [ ! -n "${BULLETTRAIN_BG_JOBS_SHOW+1}" ]; then
+  BULLETTRAIN_BG_JOBS_SHOW=true
+fi
+
+if [ ! -n "${BULLETTRAIN_BG_JOBS_BG+1}" ]; then
+  BULLETTRAIN_BG_JOBS_BG="green"
+fi
+
+if [ ! -n "${BULLETTRAIN_BG_JOBS_FG+1}" ]; then
+  BULLETTRAIN_BG_JOBS_FG="white"
+fi
+
 # TIME
 if [ ! -n "${BULLETTRAIN_TIME_SHOW+1}" ]; then
   BULLETTRAIN_TIME_SHOW=true
@@ -394,7 +407,6 @@ prompt_time() {
 # Status:
 # - was there an error
 # - am I root
-# - are there background jobs?
 prompt_status() {
   if [[ $BULLETTRAIN_STATUS_SHOW == false ]] then
     return
@@ -404,8 +416,8 @@ prompt_status() {
   symbols=()
   [[ $RETVAL -ne 0 && $BULLETTRAIN_STATUS_EXIT_SHOW != true ]] && symbols+="✘"
   [[ $RETVAL -ne 0 && $BULLETTRAIN_STATUS_EXIT_SHOW == true ]] && symbols+="✘ $RETVAL"
+
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡%f"
-  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="⚙"
 
   if [[ -n "$symbols" && $RETVAL -ne 0 ]] then
     prompt_segment $BULLETTRAIN_STATUS_ERROR_BG $BULLETTRAIN_STATUS_FG "$symbols"
@@ -413,6 +425,12 @@ prompt_status() {
     prompt_segment $BULLETTRAIN_STATUS_BG $BULLETTRAIN_STATUS_FG "$symbols"
   fi
 
+}
+
+# Background jobs
+prompt_bg_jobs() {
+  [[ $BULLETTRAIN_BG_JOBS_SHOW == true ]] || return
+  [[ -n "$(jobs)" ]] && prompt_segment $BULLETTRAIN_BG_JOBS_BG $BULLETTRAIN_BG_JOBS_FG "⚙ %j"
 }
 
 # Prompt Character
@@ -442,6 +460,7 @@ build_prompt() {
   RETVAL=$?
   prompt_time
   prompt_status
+  prompt_bg_jobs
   prompt_rvm
   prompt_virtualenv
   prompt_nvm

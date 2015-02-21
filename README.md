@@ -116,6 +116,14 @@ or don't want to see. All options must be overridden in your **.zshrc** file.
 |`BULLETTRAIN_STATUS_ERROR_BG`|`red`|Background color of segment when last command exited with an error
 |`BULLETTRAIN_STATUS_FG`|`black`|Foreground color
 
+### Background jobs
+
+|Variable|Default|Meaning
+|--------|-------|-------|
+|`BULLETTRAIN_BG_JOBS_SHOW`|`true`|Show/hide that segment
+|`BULLETTRAIN_BG_JOBS_BG`|`green`|Background color
+|`BULLETTRAIN_BG_JOBS_FG`|`white`|Foreground color
+
 ### Time
 
 |Variable|Default|Meaning
