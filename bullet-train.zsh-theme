@@ -15,6 +15,10 @@
 
 VIRTUAL_ENV_DISABLE_PROMPT=true
 
+if [ ! -n "${BULLETTRAIN_PROMPT_SEGMENTS_ORDER+1}" ]; then
+  BULLETTRAIN_PROMPT_SEGMENTS_ORDER=(time status bg_jobs rvm virtualenv nvm context dir git)
+fi
+
 # PROMPT
 if [ ! -n "${BULLETTRAIN_SHOW_PROMPT_CHAR+1}" ]; then
   BULLETTRAIN_SHOW_PROMPT_CHAR=true
@@ -462,16 +466,11 @@ prompt_char() {
 
 build_prompt() {
   RETVAL=$?
-  prompt_time
-  prompt_status
-  prompt_bg_jobs
-  prompt_rvm
-  prompt_virtualenv
-  prompt_nvm
-  prompt_context
-  prompt_dir
-  prompt_git
-  # prompt_hg
+
+  for segment in ${BULLETTRAIN_PROMPT_SEGMENTS_ORDER}; do
+    eval "prompt_${segment}"
+  done
+
   prompt_end
   prompt_char
 }

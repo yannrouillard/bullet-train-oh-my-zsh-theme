@@ -102,6 +102,7 @@ or don't want to see. All options must be overridden in your **.zshrc** file.
 
 |Variable|Default|Meaning
 |--------|-------|-------|
+|`BBULLETTRAIN_PROMPT_SEGMENTS_ORDER`|`(time status bg_jobs rvm virtualenv nvm context dir git)`|Segments display order on the prompt
 |`BULLETTRAIN_SHOW_PROMPT_CHAR`|`true`|Show a special character at end of the prompt after a newline
 |`BULLETTRAIN_PROMPT_CHAR`|`\$`|Character to be show before any command
 |`BULLETTRAIN_PROMPT_ROOT`|`true`|Highlight if running as root
