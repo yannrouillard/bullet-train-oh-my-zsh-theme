@@ -168,6 +168,8 @@ or don't want to see. All options must be overridden in your **.zshrc** file.
 |`BULLETTRAIN_DIR_BG`|`blue`|Background color
 |`BULLETTRAIN_DIR_FG`|`white`|Foreground color
 |`BULLETTRAIN_DIR_EXTENDED`|`true`|Show user and machine in an SCP formatted style.
+|`BULLETTRAIN_DIR_POWERLINE_STYLE`|`false`|Display the current path more like the original powerline style (with '  ' as the path separator)
+|`BULLETTRAIN_DIR_CUR_FOLDER_FG`|`white`|foreground color of the last component of the current path (Powerline style mode only)
 
 ### Git
 

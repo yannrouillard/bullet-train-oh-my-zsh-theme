@@ -110,6 +110,14 @@ if [ ! -n "${BULLETTRAIN_DIR_EXTENDED+1}" ]; then
   BULLETTRAIN_DIR_EXTENDED=true
 fi
 
+if [ ! -n "${BULLETTRAIN_DIR_POWERLINE_STYLE}" ]; then
+  BULLETTRAIN_DIR_POWERLINE_STYLE=false
+fi
+
+if [ ! -n "${BULLETTRAIN_DIR_CUR_FOLDER_FG}" ]; then
+  BULLETTRAIN_DIR_CUR_FOLDER_FG=white
+fi
+
 # GIT
 if [ ! -n "${BULLETTRAIN_GIT_SHOW+1}" ]; then
   BULLETTRAIN_GIT_SHOW=true
@@ -320,6 +328,15 @@ prompt_dir() {
   local _context="$(context)"
   [[ $BULLETTRAIN_DIR_CONTEXT_SHOW == true && -n "$_context" ]] && dir="${dir}${_context}:"
   [[ $BULLETTRAIN_DIR_EXTENDED == true ]] && dir="${dir}%4(c:...:)%3c" || dir="${dir}%1~"
+
+  if [[ $BULLETTRAIN_DIR_POWERLINE_STYLE == true ]] then
+    dir="$(print -P $dir)"
+    dir_components=("${(@s,/,)dir}")
+    # Last component is current folder which will be displayed in bold with a different color
+    dir_components[-1]="%B%F{${BULLETTRAIN_DIR_CUR_FOLDER_FG}}$dir_components[-1]%b%K{$BULLETTRAIN_DIR_BG}"
+    dir="${(j:  :)dir_components}"
+  fi
+
   prompt_segment $BULLETTRAIN_DIR_BG $BULLETTRAIN_DIR_FG $dir
 }
 
