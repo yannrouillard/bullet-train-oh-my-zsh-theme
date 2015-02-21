@@ -16,6 +16,9 @@
 VIRTUAL_ENV_DISABLE_PROMPT=true
 
 # PROMPT
+if [ ! -n "${BULLETTRAIN_SHOW_PROMPT_CHAR+1}" ]; then
+  BULLETTRAIN_SHOW_PROMPT_CHAR=true
+fi
 if [ ! -n "${BULLETTRAIN_PROMPT_CHAR+1}" ]; then
   BULLETTRAIN_PROMPT_CHAR="\$"
 fi
@@ -414,6 +417,8 @@ prompt_status() {
 
 # Prompt Character
 prompt_char() {
+  [[ $BULLETTRAIN_SHOW_PROMPT_CHAR == true ]] || return
+
   local bt_prompt_char
 
   if [[ ${#BULLETTRAIN_PROMPT_CHAR} -eq 1 ]] then
@@ -424,7 +429,8 @@ prompt_char() {
     bt_prompt_char="%(!.%F{red}#.%F{green}${bt_prompt_char}%f)"
   fi
 
-  echo -n $bt_prompt_char
+  echo -n "
+%{${fg_bold[default]}%}${bt_prompt_char}"
 }
 
 # ------------------------------------------------------------------------------
@@ -444,8 +450,8 @@ build_prompt() {
   prompt_git
   # prompt_hg
   prompt_end
+  prompt_char
 }
 
 PROMPT='
-%{%f%b%k%}$(build_prompt)
-%{${fg_bold[default]}%}$(prompt_char) %{$reset_color%}'
+%{%f%b%k%}$(build_prompt) %{$reset_color%}'
