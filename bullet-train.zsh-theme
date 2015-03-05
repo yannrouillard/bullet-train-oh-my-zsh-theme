@@ -77,7 +77,7 @@ BULLETTRAIN_CONTEXT_BG=${BULLETTRAIN_CONTEXT_BG:-black}
 BULLETTRAIN_CONTEXT_FG=${BULLETTRAIN_CONTEXT_FG:-default}
 
 # GIT PROMPT
-ZSH_THEME_GIT_PROMPT_PREFIX=${BULLETTRAIN_GIT_PREFIX:-" \ue0a0 "}
+ZSH_THEME_GIT_PROMPT_PREFIX=${BULLETTRAIN_GIT_PREFIX:-"  "}
 ZSH_THEME_GIT_PROMPT_SUFFIX=${BULLETTRAIN_GIT_SUFFIX:-}
 ZSH_THEME_GIT_PROMPT_DIRTY=${BULLETTRAIN_GIT_DIRTY:- ✘}
 ZSH_THEME_GIT_PROMPT_CLEAN=${BULLETTRAIN_GIT_CLEAN:- ✔}
@@ -135,7 +135,7 @@ prompt_end() {
 # Context: user@hostname (who am I and where am I)
 context() {
   local user="$(whoami)"
-  if [[ "$BULLETTRAIN_IS_SSH_CLIENT" ]]; then
+  if [[ -n "$BULLETTRAIN_IS_SSH_CLIENT" ]]; then
     echo -n "${user}@%m"
   elif [[ "$user" != "$BULLETTRAIN_CONTEXT_DEFAULT_USER" ]]; then
     echo -n "${user}"
